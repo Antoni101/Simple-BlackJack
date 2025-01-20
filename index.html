@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="fonts/fonts.css">
+    <script src="setup.js"></script>
+    <script src="animations.js"></script>
+</head>
+<body onload="loadGame()">
+
+    <p id="money">$</p>
+
+    <div id="menu">
+        <button class="startBtn" onclick="restart()">New Game</button>
+    </div>
+
+    <div id="bets">
+        <button onclick="sellChips(50)" class="operator">-</button>
+        <button id="chips" class="bet">Bet</button>
+        <button onclick="buyChips(50)" class="operator">+</button>
+    </div>
+
+    <div id="game">
+
+        <p class="values" id="A"></p>
+        <p class="values" id="B"></p>
+
+        <div class="hand" id="dealerHand"></div>        
+        <div class="hand" id="playerHand"></div>
+
+        <div id="options">
+            <button class="hit" onclick="givePlayer()">Hit</button>
+            <button class="stand" onclick="stand()">Stand</button>
+        </div>
+
+        <p id="txt"></p>
+
+    </div>
+
+
+</body>
+</html>
