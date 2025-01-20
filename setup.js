@@ -55,7 +55,9 @@ function shuffleDeck() {
 
 function loadGame() {
     updateMoney(250); // GIVES STARTER PLAYER MONEY
-    updateChips(50);
+    updateChips(0);
+
+    //shopAnimation();
 }
 
 function newGame() {
@@ -68,6 +70,7 @@ function newGame() {
     hideCard();
     showGame();
     showOptions();
+
 };
 
 function newCard(i) {
@@ -127,37 +130,9 @@ function giveDealer(x) { // if x is true: MAKE ONE CARD FACEDOWN
     document.getElementById("B").innerHTML = getValue(dealerHand);
 };
 
-function hideCard() { // HIDES FACEDOWN CARD FROM PLAYER
-    document.getElementById("B").style.display = "None";
-
-    let backColor = "SteelBlue";
-    for (let i = 0; i < dealerHand.length; i++) {
-        if (dealerHand[i].facedown == true) {
-            dealerHand[i].element.style.color = backColor;
-            dealerHand[i].element.style.backgroundColor = backColor;
-        }
-    }
-}
-
-function showCard() { // REVEALS FACEDOWN CARD FOR PLAYER
-    document.getElementById("B").style.display = "Block";
-    for (let i = 0; i < dealerHand.length; i++) {
-        if (dealerHand[i].facedown == true) {
-            dealerHand[i].element.style.transition = "1s";
-            dealerHand[i].element.style.color = dealerHand[i].color;
-            dealerHand[i].element.style.backgroundColor = "White";
-            dealerHand[i].facedown == false;
-        }
-    }
-}
-
-function checkBust(hand) {
-    if ( getValue(hand) > 21) {
-        return true;
-    }
-    else {
-        return false;
-    }
+function checkBust(hand) { // RETURNS TRUE OR FALSE IF HAND IS A BUST
+    if ( getValue(hand) > 21) { return true; }
+    else { return false; }
 }
 
 function dealerFinish() { // DEALER FINISHES HAND AFTER STAND (hand < 17)
@@ -178,7 +153,6 @@ function stand() {
 
     if (checkBust(playerHand) == false) {
         dealerFinish();
-        check();
     }
     else {
         bust();
@@ -207,48 +181,59 @@ function buyChips(amount) {
     }
 }
 
-function end() {
+function allChips() {
+    updateMoney(chips);
+    updateChips(-chips);
+}
+
+function end() { // ENDS THE GAME AND OPENS MENU
     hideOptions();
     setTimeout(function() {
         hideGame();
         setTimeout(function() {
             showMenu();
+            enableBet();
         },1000);
     },3000);
 }
 
-function restart() {
-    document.getElementById("playerHand").innerHTML = "";
-    document.getElementById("dealerHand").innerHTML = "";
-    
-    playerHand = [];
-    dealerHand = [];
+function restart() { // ONCLICK RESTART BUTTON
+    if (disableBet() == true) {
+        document.getElementById("playerHand").innerHTML = "";
+        document.getElementById("dealerHand").innerHTML = "";
+        
+        playerHand = [];
+        dealerHand = [];
 
-    hideMenu();
-    setTimeout(function() {
-        newGame();
-    },1000);
+        hideMenu();
+        setTimeout(function() {
+            newGame();
+        },1000);
+    }
+    else {
+        say("Must make a wager!");
+    }
 }
 
 function win() {
-    say("Player Wins");
-    setTimeout(updateChips(chips * 1.5),2000)
+    say("Player Wins " + (chips * 1.5) + " chips!");
+    setTimeout(updateChips(chips * 1.5),3000);
     end();
 }
 
 function bust() {
-    say("Bust");
-    updateChips(-999999);
+    say("Bust :(");
+    setTimeout(updateChips(-999999),3000);
     end();
 }
 
 function tie() {
-    say("Push");
+    say("Push, nobody wins, nobody loses");
     end();
 }
 
 function lose() {
-    say("Player Loses");
-    updateChips(-999999);
+    say("Player Loses :(");
+    setTimeout(updateChips(-999999),3000);
     end();
 }
