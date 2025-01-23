@@ -132,9 +132,10 @@ function hideGame() {
 function hideCard() { // HIDES FACEDOWN CARD FROM PLAYER
     document.getElementById("B").style.display = "None";
 
-    let backColor = "SteelBlue";
+    let backColor = "White";
     for (let i = 0; i < dealerHand.length; i++) {
         if (dealerHand[i].facedown == true) {
+            //dealerHand[i].element.style.border = "None";
             dealerHand[i].element.style.color = backColor;
             dealerHand[i].element.style.backgroundColor = backColor;
         }
@@ -161,6 +162,7 @@ function enableBet() {
     document.getElementById("chips").disabled = false;
     document.getElementById("chips").style.transform = "Scale(1.0)";
     document.getElementById("money").style.opacity = 1.0;
+    document.getElementById("bets").style.top = "60%";
 }
 
 function disableBet() {
@@ -172,19 +174,26 @@ function disableBet() {
             document.getElementById("opB").disabled = true;
             document.getElementById("chips").disabled = true;
         },1000);
-        document.getElementById("chips").style.transform = "Scale(2.5)";
+
+        document.getElementById("bets").style.top = "91%";
+        document.getElementById("chips").style.transform = "Scale(1.5)";
         document.getElementById("money").style.opacity = 0.0;
         return true;
     }
     else {
-        document.getElementById("chips").style.color = "Red";
-        document.getElementById("chips").style.transform = "Scale(1.1)";
-        setTimeout(function() {
-            document.getElementById("chips").style.color = "White";
-            document.getElementById("chips").style.transform = "Scale(1.0)";
-        },1000);
+        elementAlert(document.getElementById("chips"));
         return false;
     }
+}
+
+function elementAlert(element) {
+    let originalColor = element.style.color;
+    element.style.color = "Red";
+    element.style.transform = "Scale(1.1)";
+    setTimeout(function() {
+        element.style.color = originalColor;
+        element.style.transform = "Scale(1.0)";
+    },1000);
 }
 
 function shopAnimation() {

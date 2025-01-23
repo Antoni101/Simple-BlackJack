@@ -27,7 +27,6 @@ let dealerHand = [];
 function newDeck() {  // RETURNS STANDARD DECK OF CARDS
 
     deck = [];
-
     for (let i = 0; i < suits.length; i++) {
 
         deck.push({ rank: "A", suit: suits[i].name, value: 11, symbol: suits[i].symbol, color: suits[i].color })
@@ -54,9 +53,10 @@ function shuffleDeck() {
 }
 
 function loadGame() {
+
+    upgradesSetup();
     updateMoney(200); // GIVES STARTER PLAYER MONEY
     updateChips(0);
-    loadUpgrades();
 
     //shopAnimation();
 }
@@ -96,6 +96,7 @@ function newCard(i) {
     rankB.append(i.rank);
     card.append(rankB);
     card.style.color = i.color;
+    card.style.border = `3px solid ${i.color}`
 
     return card;
 };

@@ -7,3 +7,18 @@
     font-family: Lato;
     src: url("Lato-Regular.ttf");
 }
+
+@font-face {
+    font-family: Lato-Bold;
+    src: url("Lato-Bold.ttf");
+}
+
+@font-face {
+    font-family: FiraSans;
+    src: url("FiraSans-Regular.ttf");
+}
+
+@font-face {
+    font-family: FiraSans-Bold;
+    src: url("FiraSans-Bold.ttf");
+}
