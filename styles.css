@@ -132,21 +132,56 @@ button:active {
     left: 45%;
     width: 250px;
     height: 100px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 #shopBtn {
     background-color: OrangeRed;
     position: fixed;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    bottom: 36%;
-    font-size: 40px;
+    bottom: 40%;
+    font-size: 30px;
     left: 45%;
     width: 250px;
-    height: 100px;
+    height: 80px;
 }
 
 #shopBtn:hover {
     background-color: Peru;
+}
+
+#shop {
+    display: None;
+    text-align: center;
+    position: fixed;
+    height: 700px;
+    width: 500px;
+    bottom: 10%;
+    left: 5%;
+    background-color: BurlyWood;
+    border: 3px solid DarkKhaki;
+    border-radius: 5px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.shopBtns {
+    font-size: 15px;
+    background-color: MediumSlateBlue;
+    margin: 5%;
+    width: 400px;
+    font-family: Libre;
+
+}
+
+#settingBtn {
+    background-color: DarkSlateGrey;
+    position: fixed;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    bottom: 30%;
+    font-size: 25px;
+    left: 45%;
+    width: 250px;
+    height: 80px;
 }
 
 

@@ -54,8 +54,9 @@ function shuffleDeck() {
 }
 
 function loadGame() {
-    updateMoney(250); // GIVES STARTER PLAYER MONEY
+    updateMoney(200); // GIVES STARTER PLAYER MONEY
     updateChips(0);
+    loadUpgrades();
 
     //shopAnimation();
 }
@@ -221,9 +222,23 @@ function win() {
     end();
 }
 
+function loseAllChips() {
+    let save = 0;
+    let lossAmount = chips;
+    if (upgrades[0].enabled == true) {
+        let percent = 0.1 * upgrades[0].bought;
+        save = chips * percent;
+        console.log("Total Lost: " + lossAmount);
+        console.log("Saved Chips" + save);
+        lossAmount -= save;
+    }
+
+    setTimeout(updateChips(-lossAmount),3000);
+}
+
 function bust() {
     say("Bust :(");
-    setTimeout(updateChips(-999999),3000);
+    loseAllChips();
     end();
 }
 
@@ -234,6 +249,6 @@ function tie() {
 
 function lose() {
     say("Player Loses :(");
-    setTimeout(updateChips(-999999),3000);
+    loseAllChips();
     end();
 }
