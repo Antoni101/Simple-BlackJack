@@ -154,38 +154,6 @@ function showCard() { // REVEALS FACEDOWN CARD FOR PLAYER
     }
 }
 
-function enableBet() {
-    document.getElementById("opA").style.opacity = 1.0;
-    document.getElementById("opB").style.opacity = 1.0;
-    document.getElementById("opA").disabled = false;
-    document.getElementById("opB").disabled = false;
-    document.getElementById("chips").disabled = false;
-    document.getElementById("chips").style.transform = "Scale(1.0)";
-    document.getElementById("money").style.opacity = 1.0;
-    document.getElementById("bets").style.top = "60%";
-}
-
-function disableBet() {
-    if (chips > 0) {
-        document.getElementById("opA").style.opacity = 0.0;
-        document.getElementById("opB").style.opacity = 0.0;
-        setTimeout(function() {
-            document.getElementById("opA").disabled = true;
-            document.getElementById("opB").disabled = true;
-            document.getElementById("chips").disabled = true;
-        },1000);
-
-        document.getElementById("bets").style.top = "91%";
-        document.getElementById("chips").style.transform = "Scale(1.5)";
-        document.getElementById("money").style.opacity = 0.0;
-        return true;
-    }
-    else {
-        elementAlert(document.getElementById("chips"));
-        return false;
-    }
-}
-
 function elementAlert(element) {
     let originalColor = element.style.color;
     element.style.color = "Red";
@@ -194,22 +162,4 @@ function elementAlert(element) {
         element.style.color = originalColor;
         element.style.transform = "Scale(1.0)";
     },1000);
-}
-
-function shopAnimation() {
-    let original = 36;
-    let y = original;
-    let x = true;
-    let shop = document.getElementById("shopBtn");
-    setInterval(function() {
-        if (x == true) {
-            y ++
-            x = false;
-        }
-        else {
-            y--
-            x = true;
-        }
-        shop.style.bottom = `${y}%`;
-    },20)
 }

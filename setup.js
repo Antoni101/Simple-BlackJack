@@ -53,26 +53,43 @@ function shuffleDeck() {
 }
 
 function loadGame() {
-
     upgradesSetup();
     updateMoney(200); // GIVES STARTER PLAYER MONEY
     updateChips(0);
-
-    //shopAnimation();
 }
 
 function newGame() {
     newDeck();
+    hideMenu();
+    
+    setTimeout(makeBets,500);
+};
 
-    // DEALS CARDS TO PLAYER AND DEALER
+function makeBets() {
+    document.getElementById("bets").style.display = "Block";
+    document.getElementById("money").style.display = "Block";
+}
+
+function done() {
+    if (chips > 0) {
+        document.getElementById("bets").style.display = "None";
+        document.getElementById("money").style.display = "None";
+        newRound();
+    }
+}
+
+function newRound() {
+    document.getElementById("playerHand").innerHTML = "";
+    document.getElementById("dealerHand").innerHTML = "";
+    playerHand = [];
+    dealerHand = [];
+        // DEALS CARDS TO PLAYER AND DEALER
     givePlayer(); givePlayer(); 
     giveDealer(false); giveDealer(true); 
-
     hideCard();
-    showGame();
     showOptions();
-
-};
+    showGame();
+}
 
 function newCard(i) {
     let card = document.createElement("div");
@@ -197,24 +214,6 @@ function end() { // ENDS THE GAME AND OPENS MENU
             enableBet();
         },1000);
     },3000);
-}
-
-function restart() { // ONCLICK RESTART BUTTON
-    if (disableBet() == true) {
-        document.getElementById("playerHand").innerHTML = "";
-        document.getElementById("dealerHand").innerHTML = "";
-        
-        playerHand = [];
-        dealerHand = [];
-
-        hideMenu();
-        setTimeout(function() {
-            newGame();
-        },1000);
-    }
-    else {
-        say("Must make a wager!");
-    }
 }
 
 function win() {

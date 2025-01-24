@@ -1,5 +1,5 @@
 body, html {
-    background-color: Lavender;
+    background-color: DarkSlateBlue;
     overflow: hidden;
 }
 
@@ -68,14 +68,8 @@ button {
     transition: 0.2s;
 }
 
-button:hover {
-    transform: scale(1.1);
-    background-color: SlateBlue;
-}
-
-button:active {
-    transform: scale(0.99);
-}
+button:hover {transform: scale(1.1); background-color: blue; }
+button:active { transform: scale(0.99); }
 
 #txt {
     text-align: center;
@@ -98,6 +92,7 @@ button:active {
     position: fixed;
     font-size: 10px;
     font-family: Lato;
+    color: white;
     left: 50%;
 }
 
@@ -105,96 +100,79 @@ button:active {
 #B {bottom: 87%;}
 
 #money {
+    display: None;
     text-align: center;    
-    color: green;
-    font-size: 40px;
+    color: LightGreen;
+    font-size: 60px;
     font-family: FiraSans;
     transition: 0.2s;
+    text-shadow: 2px 2px 4px #000000;
 }
 
 #bets {
+    display: None; 
     position: fixed;
-    left: 50.13%;
-    top: 60%;
+    left: 50.13%; top: 40%;
     transform: translate(-50%, 0);
 }
 
-.bet {
-    width: 80px;
-    height: 50px;
+#doneBtn {
+    width: 45px;
+    background-color: lightgreen;
 }
 
-.operator {
-    width: 40px;
-    height: 50px;
+.bet { width: 80px; height: 50px; }
+.operator { width: 40px; height: 50px; }
+
+#shopBtn {
+    position: absolute;
+    top: 10%;
+    bottom: 0;
+    left: 0; right: 0;
+    margin: auto;
+    background-color: BlueViolet;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    font-size: 30px;
+    width: 250px;
+    height: 75px;
 }
 
 .startBtn {
     position: absolute;
     top: -50%;
     bottom: 10px;
-    left: 0;
-    right: 0;
+    left: 0; right: 0;
     margin: auto;
-
+    background-color: BlueViolet;;
     bottom: -40%;
-    font-size: 40px;
-    width: 250px;
-    height: 100px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
-
-#shopBtn {
-    position: absolute;
-    top: 10%;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-
-    background-color: BlueViolet;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     font-size: 30px;
-    width: 190px;
-    height: 70px;
-}
-
-#shopBtn:hover {
-    background-color: Blue;
+    width: 250px;
+    height: 80px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 #shop {
     display: none;
     text-align: center;
-    height: 700px;
-    width: 500px;
+    height: 300px;
+    width: 300px;
     bottom: 10%;
     left: 5%;
-    background-color: BurlyWood;
-    border: 3px solid DarkKhaki;
-    border-radius: 5px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    background-color: DarkOrchid;
+    border: 2px solid blue;
+    border-radius: 10px;
+    overflow-y: auto;
 }
 
 .shopBtns {
-    font-size: 15px;
+    font-size: 18px;
     background-color: MediumSlateBlue;
     margin: 5%;
-    width: 400px;
+    width: 80%;
     font-family: Libre;
 
 }
 
-#settingBtn {
-    background-color: DarkSlateGrey;
-    position: fixed;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    bottom: 30%;
-    font-size: 25px;
-    left: 45%;
-    width: 250px;
-    height: 80px;
-}
 
 
 
