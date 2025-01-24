@@ -198,29 +198,6 @@ button:active { transform: scale(1); }
     transform: scale(1.1);
 }
 
-#custom {
-    position: relative;
-    opacity: 0.5;
-    margin: 5%;
-    padding: 10px;
-    border-radius: 5px;
-    display: Block;
-    font-size: 15px;
-    height: 20px;
-    width: 100px;
-    border: None;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    transition: 0.2s;
-}
-
-#custom:hover {
-    opacity: 1.0;
-}
-
-#custom:focus{
-    outline: none;
-}
-
 
 
 

@@ -1,6 +1,7 @@
 
 let canSay = true;
 let canAlert = true;
+let tempMoney = 0;
 
 function say(text) {
     if (canSay == true) {
@@ -27,55 +28,20 @@ function say(text) {
 
 }
 
-function updateMoney(amount) {
-
-    if (amount > 0) {
-        let moneyChange = setInterval(function() {
-            if (amount > 0) {
-                money += 1;
-                amount -= 1;
-            }
-            else {
-                clearInterval(moneyChange);
-            }
-            document.getElementById("money").innerHTML = "$" + money;
-        }, 1);
-    }
-    else {
-        let moneyChange = setInterval(function() {
-            if (amount < 0 && money > 0) {
-                money -= 1;
-                amount += 1;
-            }
-            else clearInterval(moneyChange);
-            document.getElementById("money").innerHTML = "$" + money;
-        }, 1);
-    }
+function gainMoney(amount) {  
+    money += Math.round(amount);
+    document.getElementById("money").innerHTML = "$" + money;
 }
 
+function loseMoney(amount) {
+    money -= amount;
+    document.getElementById("money").innerHTML = "$" + money;
+}
+
+
 function updateChips(amount) {
-    if (amount > 0) {
-        let moneyChange = setInterval(function() {
-            if (amount > 0) {
-                chips ++;
-                amount --;
-            }
-            else {
-                clearInterval(moneyChange);
-            }
-            document.getElementById("chips").innerHTML = "❂" + chips;
-        }, 1);
-    }
-    else {
-        let moneyChange = setInterval(function() {
-            if (amount < 0 && chips > 0) {
-                chips --;
-                amount ++;
-            }
-            else clearInterval(moneyChange);
-            document.getElementById("chips").innerHTML = "❂" + chips;
-        }, 1);
-    }
+    chips += Math.round(amount)
+    document.getElementById("chips").innerHTML = "❂" + chips;
 }
 
 function hideOptions() {

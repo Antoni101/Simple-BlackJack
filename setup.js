@@ -44,7 +44,7 @@ function newDeck() {  // RETURNS STANDARD DECK OF CARDS
     return deck;
 }
 
-function shuffleDeck() {
+function shuffleDeck() { // SHUFFLES DECK
     for (let i = deck.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [deck[i], deck[j]] = [deck[j], deck[i]];
@@ -54,51 +54,37 @@ function shuffleDeck() {
 
 function loadGame() {
     upgradesSetup();
-    updateMoney(200); // GIVES STARTER PLAYER MONEY
+    gainMoney(500); // GIVES STARTER PLAYER MONEY
     updateChips(0);
 }
 
 function newGame() {
-    newDeck();
     hideMenu();
-    
     setTimeout(makeBets,500);
 };
 
 function gainInterest() {
     let intPercent = 0.1 * upgrades[2].bought;
     let intGain = Math.round(money * intPercent);
-    setTimeout(function() {
-        say(`Gained $${intGain} in Interest`);
-        updateMoney(intGain);
-        showBets();
-    },1000);
+    console.log("Gained $",intGain + " in interest");
+    return intGain
 }
 
 function makeBets() {
     if (upgrades[2].enabled == true) {
-        gainInterest();
+        gainMoney(gainInterest());
     }
-    else {
-        showBets();
-    }
+    setTimeout(showBets,500);
 }
 
 function showBets() {
-    document.getElementById("custom").value = "";
     document.getElementById("bets").style.display = "Block";
     document.getElementById("money").style.display = "Block";
     document.getElementById("shopBtn").style.display = "Block";
 }
 
 function done() {
-    let doCustom = false
-    let custom = document.getElementById("custom").value;
-    if (custom > 0 && custom <= money) {
-        buyChips(custom);
-        doCustom = true;
-    }
-    if (chips > 0 || doCustom == true) {
+    if (chips > 0) {
         document.getElementById("bets").style.display = "None";
         document.getElementById("money").style.display = "None";
         document.getElementById("shopBtn").style.display = "None";
@@ -113,14 +99,14 @@ function done() {
 function sellChips(amount) {
     let cashout = amount;
     if ( chips >= cashout) {
-        updateMoney(cashout); 
+        gainMoney(cashout); 
         updateChips(-cashout);
     }
 }
 
 function buyChips(amount) {
     if ( money >= amount) {
-        updateMoney(-amount); 
+        loseMoney(amount); 
         updateChips(amount);
     }
 }
@@ -131,12 +117,21 @@ function newRound() {
     document.getElementById("dealerHand").innerHTML = "";
     playerHand = [];
     dealerHand = [];
-        // DEALS CARDS TO PLAYER AND DEALER
+
+    newDeck();
+
+    // DEALS CARDS TO PLAYER AND DEALER
     givePlayer(); givePlayer(); 
     giveDealer(false); giveDealer(true); 
     hideCard();
     showOptions();
     showGame();
+    logs();
+}
+
+function logs() {
+    console.log("Player:"+getValue(playerHand),"| Dealer:"+getValue(dealerHand));
+    console.log("Next card:",deck[0].value);
 }
 
 function newCard(i) {
@@ -161,10 +156,26 @@ function newCard(i) {
     rankB.append(i.rank);
     card.append(rankB);
     card.style.color = i.color;
-    card.style.border = `3px solid ${i.color}`
+    if (i.rank == "A" && i.facedown != true) {
+        card.style.border = `4px solid Orange`;
+    }
+    else {
+        card.style.border = `3px solid ${i.color}`;
+    }
+    card.onclick = function() {
+        if (i.rank == "A" && i.value == 11) {
+            i.value = 1;
+            document.getElementById("A").innerHTML = getValue(playerHand);
+        }
+        else if (i.rank == "A" && i.value == 1) {
+            i.value = 11;
+            document.getElementById("A").innerHTML = getValue(playerHand);
+        }
+    };
 
     return card;
 };
+
 
 function getValue(hand) { // RETURNS VALUE OF HAND
     let value = 0;
@@ -185,6 +196,7 @@ function givePlayer() { // GIVES PLAYER NEW CARD FROM DECK
         bust();
         hideOptions();
     }
+    logs();
 };
 
 // GIVES DEALER NEW CARD FROM DECK
@@ -195,6 +207,7 @@ function giveDealer(x) { // if x is true: MAKE ONE CARD FACEDOWN
     item.element = newCard(item);
     document.getElementById("dealerHand").append(item.element);
     document.getElementById("B").innerHTML = getValue(dealerHand);
+    logs();
 };
 
 function checkBust(hand) { // RETURNS TRUE OR FALSE IF HAND IS A BUST
@@ -238,7 +251,7 @@ function check() { // CHECKS COMBOS AFTER STAND
 }
 
 function allChips() {
-    updateMoney(chips);
+    gainMoney(chips);
     updateChips(-chips);
 }
 
@@ -248,8 +261,8 @@ function end() { // ENDS THE GAME AND OPENS MENU
         hideGame();
         setTimeout(function() {
             makeBets();
-        },1000);
-    },3000);
+        },500);
+    },2000);
 }
 
 function loseAllChips() {
