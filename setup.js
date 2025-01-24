@@ -23,6 +23,7 @@ let chips = 0;
 let deck = [];
 let playerHand = [];
 let dealerHand = [];
+let doContinue = false;
 
 function newDeck() {  // RETURNS STANDARD DECK OF CARDS
 
@@ -71,6 +72,9 @@ function gainInterest() {
 }
 
 function makeBets() {
+    doContinue = false;
+    document.getElementById("newroundBtn").style.display = "None";
+    document.getElementById("continueBtn").style.display = "None";
     if (upgrades[2].enabled == true) {
         gainMoney(gainInterest());
     }
@@ -111,7 +115,30 @@ function buyChips(amount) {
     }
 }
 
+function keepGoing() {
+    doContinue = true
+    newRound();
+}
+
+function end() { // ENDS THE GAME AND OPENS MENU
+    hideOptions();
+    setTimeout(function() {
+        hideGame();
+        setTimeout(function() {
+            if (chips > 0) {
+                document.getElementById("newroundBtn").style.display = "Block";
+                document.getElementById("continueBtn").style.display = "Block";
+            }
+            else {
+                makeBets();
+            }
+        },500);
+    },2000);
+}
+
 function newRound() {
+    document.getElementById("newroundBtn").style.display = "None";
+    document.getElementById("continueBtn").style.display = "None";
     shopScr.style.display = "none";
     document.getElementById("playerHand").innerHTML = "";
     document.getElementById("dealerHand").innerHTML = "";
@@ -255,16 +282,6 @@ function allChips() {
     updateChips(-chips);
 }
 
-function end() { // ENDS THE GAME AND OPENS MENU
-    hideOptions();
-    setTimeout(function() {
-        hideGame();
-        setTimeout(function() {
-            makeBets();
-        },500);
-    },2000);
-}
-
 function loseAllChips() {
     let save = 0;
     let lossAmount = chips;
@@ -279,10 +296,18 @@ function loseAllChips() {
 }
 
 function win() {
+    let bonus = 0;
+    let extraChips = 0;
     let reward = chips * 2;
     if (upgrades[1].enabled == true) {
-        let bonus = 1.5 * upgrades[1].bought;
-        let extraChips = (reward * bonus) - reward;
+        bonus += 1.5 * upgrades[1].bought;
+        extraChips = (reward * bonus) - reward;
+        say(`Player wins ${reward}(+${extraChips}) chips`);
+        reward = (reward * bonus);
+    }
+    if (doContinue == true) {
+        bonus += 0.25;
+        extraChips = (reward * bonus) - reward;
         say(`Player wins ${reward}(+${extraChips}) chips`);
         reward = (reward * bonus);
     }

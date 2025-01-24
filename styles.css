@@ -56,7 +56,7 @@ body, html {
 
 button {
     font-size: 20px;
-    font-family: Lato;
+    font-family: Lato-Bold;
     width: 100px;
     height: 50px;
     border: none;
@@ -186,6 +186,26 @@ button:active { transform: scale(1); }
     position: relative;
     top: 25px;
     transition: 0.3s;
+}
+
+#continueBtn {
+    display: None;
+    font-size: 15px;
+    width: 200px;
+    position: fixed;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+}
+
+#newroundBtn {
+    display: None;
+    font-size: 15px;
+    width: 200px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .buyBtns:hover {
