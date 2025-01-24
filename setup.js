@@ -65,20 +65,68 @@ function newGame() {
     setTimeout(makeBets,500);
 };
 
+function gainInterest() {
+    let intPercent = 0.1 * upgrades[2].bought;
+    let intGain = Math.round(money * intPercent);
+    setTimeout(function() {
+        say(`Gained $${intGain} in Interest`);
+        updateMoney(intGain);
+        showBets();
+    },1000);
+}
+
 function makeBets() {
+    if (upgrades[2].enabled == true) {
+        gainInterest();
+    }
+    else {
+        showBets();
+    }
+}
+
+function showBets() {
+    document.getElementById("custom").value = "";
     document.getElementById("bets").style.display = "Block";
     document.getElementById("money").style.display = "Block";
+    document.getElementById("shopBtn").style.display = "Block";
 }
 
 function done() {
-    if (chips > 0) {
+    let doCustom = false
+    let custom = document.getElementById("custom").value;
+    if (custom > 0 && custom <= money) {
+        buyChips(custom);
+        doCustom = true;
+    }
+    if (chips > 0 || doCustom == true) {
         document.getElementById("bets").style.display = "None";
         document.getElementById("money").style.display = "None";
+        document.getElementById("shopBtn").style.display = "None";
         newRound();
+    }
+    else {
+        say("Must buy chips");
+        elementAlert(document.getElementById("chips"));
+    }
+}
+
+function sellChips(amount) {
+    let cashout = amount;
+    if ( chips >= cashout) {
+        updateMoney(cashout); 
+        updateChips(-cashout);
+    }
+}
+
+function buyChips(amount) {
+    if ( money >= amount) {
+        updateMoney(-amount); 
+        updateChips(amount);
     }
 }
 
 function newRound() {
+    shopScr.style.display = "none";
     document.getElementById("playerHand").innerHTML = "";
     document.getElementById("dealerHand").innerHTML = "";
     playerHand = [];
@@ -179,25 +227,14 @@ function stand() {
 }
 
 function check() { // CHECKS COMBOS AFTER STAND
-    if (getValue(dealerHand) == 21 || getValue(dealerHand) == getValue(playerHand)) { tie(); }
+    if (getValue(dealerHand) == getValue(playerHand)) {
+        tie(); 
+    }
     else if (getValue(playerHand) == 21) { win(); }
     else if (getValue(playerHand) > getValue(dealerHand)) { win(); }
     else if (getValue(dealerHand) > 21) { win(); }
+    else if (getValue(dealerHand) == 21) { lose(); }
     else { lose(); }
-}
-
-function sellChips(amount) {
-    if ( chips >= amount) {
-        updateMoney(50); 
-        updateChips(-50);
-    }
-}
-
-function buyChips(amount) {
-    if ( money >= amount) {
-        updateMoney(-50); 
-        updateChips(50);
-    }
 }
 
 function allChips() {
@@ -210,16 +247,9 @@ function end() { // ENDS THE GAME AND OPENS MENU
     setTimeout(function() {
         hideGame();
         setTimeout(function() {
-            showMenu();
-            enableBet();
+            makeBets();
         },1000);
     },3000);
-}
-
-function win() {
-    say("Player Wins " + (chips * 1.5) + " chips!");
-    setTimeout(updateChips(chips * 1.5),3000);
-    end();
 }
 
 function loseAllChips() {
@@ -228,27 +258,41 @@ function loseAllChips() {
     if (upgrades[0].enabled == true) {
         let percent = 0.1 * upgrades[0].bought;
         save = chips * percent;
-        console.log("Total Lost: " + lossAmount);
-        console.log("Saved Chips" + save);
         lossAmount -= save;
     }
 
+    say("-" + lossAmount + " chips");
     setTimeout(updateChips(-lossAmount),3000);
 }
 
+function win() {
+    let reward = chips * 2;
+    if (upgrades[1].enabled == true) {
+        let bonus = 1.5 * upgrades[1].bought;
+        let extraChips = (reward * bonus) - reward;
+        say(`Player wins ${reward}(+${extraChips}) chips`);
+        reward = (reward * bonus);
+    }
+    else {
+        say(`Player wins ${reward} chips`);
+    }
+    setTimeout(updateChips(reward),3000);
+    end();
+}
+
 function bust() {
-    say("Bust :(");
+    say("Bust");
     loseAllChips();
     end();
 }
 
 function tie() {
-    say("Push, nobody wins, nobody loses");
+    say("Push");
     end();
 }
 
 function lose() {
-    say("Player Loses :(");
+    say("Player Loses");
     loseAllChips();
     end();
 }

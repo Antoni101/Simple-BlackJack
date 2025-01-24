@@ -1,67 +1,80 @@
+
+let canSay = true;
+let canAlert = true;
+
 function say(text) {
-    let txt = document.getElementById("txt");
-    txt.innerHTML = text;
-
-    txt.style.display = "Block";
-
-    setTimeout(function() {
+    if (canSay == true) {
+        canSay = false;
+        let txt = document.getElementById("txt");
+        txt.innerHTML = "";
         txt.style.opacity = "1.0";
+        let counter = 100;
         txt.style.transform = "Scale(1.0)";
+        for (let i = 0; i < text.length; i++) {
+            setTimeout(function() {
+                txt.innerHTML += text.charAt(i);
+            },counter);
+            counter += 20;
+        }
 
         setTimeout(function() {
-            txt.style.opacity = "0.0";
+
             txt.style.transform = "Scale(0.0)";
-        }, 2500);
-    }, 500);
+            txt.style.opacity = "0.0";
+            canSay = true;
+        }, 150 * text.length);
+    }
+
 }
 
 function updateMoney(amount) {
+
     if (amount > 0) {
-        let gain = setInterval(function() {
+        let moneyChange = setInterval(function() {
             if (amount > 0) {
-                money ++;
-                amount --;
+                money += 1;
+                amount -= 1;
             }
             else {
-                clearInterval(gain);
+                clearInterval(moneyChange);
             }
             document.getElementById("money").innerHTML = "$" + money;
-        }, 5);
+        }, 1);
     }
     else {
-        let gain = setInterval(function() {
+        let moneyChange = setInterval(function() {
             if (amount < 0 && money > 0) {
-                money --;
-                amount ++;
+                money -= 1;
+                amount += 1;
             }
-            else clearInterval(gain);
+            else clearInterval(moneyChange);
             document.getElementById("money").innerHTML = "$" + money;
-        }, 5);
+        }, 1);
     }
 }
 
 function updateChips(amount) {
     if (amount > 0) {
-        let gain = setInterval(function() {
+        let moneyChange = setInterval(function() {
             if (amount > 0) {
                 chips ++;
                 amount --;
             }
             else {
-                clearInterval(gain);
+                clearInterval(moneyChange);
             }
             document.getElementById("chips").innerHTML = "❂" + chips;
-        }, 5);
+        }, 1);
     }
     else {
-        let gain = setInterval(function() {
+        let moneyChange = setInterval(function() {
             if (amount < 0 && chips > 0) {
                 chips --;
                 amount ++;
             }
-            else clearInterval(gain);
+            else clearInterval(moneyChange);
             document.getElementById("chips").innerHTML = "❂" + chips;
-        }, 5);
+        }, 1);
     }
 }
 
@@ -155,11 +168,15 @@ function showCard() { // REVEALS FACEDOWN CARD FOR PLAYER
 }
 
 function elementAlert(element) {
-    let originalColor = element.style.color;
-    element.style.color = "Red";
-    element.style.transform = "Scale(1.1)";
-    setTimeout(function() {
-        element.style.color = originalColor;
-        element.style.transform = "Scale(1.0)";
-    },1000);
+    if (canAlert == true) {
+        canAlert = false;
+        let originalColor = element.style.color;
+        element.style.color = "Red";
+        element.style.transform = "Scale(1.2)";
+        setTimeout(function() {
+            element.style.color = originalColor;
+            element.style.transform = "Scale(1.0)";
+            canAlert = true;
+        },300);
+    }
 }
