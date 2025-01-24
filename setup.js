@@ -55,6 +55,7 @@ function shuffleDeck() { // SHUFFLES DECK
 
 function loadGame() {
     upgradesSetup();
+    document.getElementById("startBtn").style.opacity = 1.0;
     gainMoney(500); // GIVES STARTER PLAYER MONEY
     updateChips(0);
 }
@@ -82,9 +83,14 @@ function makeBets() {
 }
 
 function showBets() {
-    document.getElementById("bets").style.display = "Block";
-    document.getElementById("money").style.display = "Block";
-    document.getElementById("shopBtn").style.display = "Block";
+    if (chips <= 0 && money <= 0) {
+        gameOver();
+    }
+    else {
+        document.getElementById("bets").style.display = "Block";
+        document.getElementById("money").style.display = "Block";
+        document.getElementById("shopBtn").style.display = "Block";
+    }
 }
 
 function done() {
@@ -133,6 +139,13 @@ function end() { // ENDS THE GAME AND OPENS MENU
                 makeBets();
             }
         },500);
+    },2000);
+}
+
+function gameOver() {
+    say("Gameover! No Money or Chips");
+    setTimeout(function() {
+        window.location.reload();
     },2000);
 }
 
